@@ -13,14 +13,16 @@ app.use(express.json());
 
 
 
-
-
-
-
-
-
 app.get("/", (req, res, next) => {
   res.sendFile(path.join(`${__dirname}/frontend/index.html`));
+});
+
+app.get("/hmm", (req, res, next) => {
+  res.sendFile(path.join(`${__dirname}/frontend/hmm.html`));
+});
+
+app.get("/something", (req, res, next) => {
+  res.sendFile(path.join(`${__dirname}/frontend/something.html`));
 });
 
 app.use("/public", express.static(`${__dirname}/frontend/public`));
