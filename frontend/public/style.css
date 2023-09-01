@@ -54,3 +54,11 @@ footer {
   align-items: center;
   padding: 1rem;
 }
+
+form {
+    margin-bottom: 3rem;
+}
+
+form > div {
+    margin-bottom: 0.5rem;
+}

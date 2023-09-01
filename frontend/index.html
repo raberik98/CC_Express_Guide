@@ -15,12 +15,28 @@
         </nav>
     </header>
     <main>
-        index
+        <h1>On this page you can register!</h1>
+        <form id="form">
+            <div>
+                <label for="input-name">Name:</label>
+                <input name="name" id="input-name" type="text" placeholder="You can start typing...">
+            </div>
+            <div>
+                <label for="input-age">Age:</label>
+                <input name="age" id="input-age" type="number" placeholder="How old are you?">
+            </div>
+            <button type="submit" id="btn-submit-form">Submit form</button>
+        </form>
+        <h2>Users are here:</h2>
+        <div id="people-container">
 
+        </div>
     </main>
     <footer>
         <p>&copy; 2023 My Company. All Rights Reserved.</p>
         <p>Privacy Policy | Terms of Service | Contact Us</p>
     </footer>
+
+    <script src="/public/services/script.js"></script>
 </body>
 </html>
