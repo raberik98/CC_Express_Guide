@@ -1,114 +1,34 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const app = express();
+// const express = require("express");
+// const fs = require("fs");
+// const path = require("path");
+// const app = express();
+
+import express from "express"
+const app = express()
+import fs from "fs"
+import path from "path"
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+import { fileURLToPath } from "url";
 
 app.use(express.json());
+// app.use(express.text())
 
-
-app.get("/api/v1/getPeopleData", (req, res) => {
-    fs.readFile('./data/people.json', 'utf-8', (err, data) => {
-        if (err) res.status(500).json({ message: "Upss, something went wrong, please try again later!" });
-        const items = JSON.parse(data)
-        res.json(items)
-    })
-})
-
-app.post("/api/v1/addNewPerson", (req, res) => {
-    fs.readFile('./data/people.json', 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-        }
-
-        const allData = JSON.parse(data)
-        const newData = {
-            name: req.body.name,
-            age: req.body.age
-        }
-        allData.push(newData)
-
-        fs.writeFile('./data/people.json', JSON.stringify(allData), (err) => {
-            if (err) {
-                return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-            }
-
-            return res.json({ message: "Hurray the data have been saved!" })
-        })
-    })
-})
-
-app.put("/api/v1/replacePerson/:name", (req, res) => {
-    fs.readFile('./data/people.json', 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-        }
-
-        const allData = JSON.parse(data)
-        const selectedPerson = allData.find(nextData => nextData.name === req.params.name)
-        selectedPerson.name = req.body.name
-        selectedPerson.age = req.body.age
-
-        fs.writeFile('./data/people.json', JSON.stringify(allData), (err) => {
-            if (err) {
-                return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-            }
-
-            return res.json({ message: "Hurray the data have been updated!" })
-        })
-    })
-})
-
-app.patch("/api/v1/changeName/:name", (req, res) => {
-    fs.readFile('./data/people.json', 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-        }
-
-        const allData = JSON.parse(data)
-        const selectedPerson = allData.find(nextData => nextData.name === req.params.name)
-        selectedPerson.name = req.body.name
-
-        fs.writeFile('./data/people.json', JSON.stringify(allData), (err) => {
-            if (err) {
-                return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-            }
-
-            return res.json({ message: "Hurray the data have been saved!" })
-        })
-    })
-})
-
-app.delete("/api/v1/deletePerson/:name", (req, res) => {
-    fs.readFile('./data/people.json', 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-        }
-
-        const allData = JSON.parse(data)
-        const newArray = allData.filter(nextData => nextData.name !== req.params.name)
-
-        fs.writeFile('./data/people.json', JSON.stringify(newArray), (err) => {
-            if (err) {
-                return res.status(500).json({ message: "Upss, something went wrong, please try again later!" }) 
-            }
-
-            return res.json({ message: "Hurray the data have been deleted!" })
-        })
-    })
-})
+import personRouter from "./routes/personRouter.js"
+app.use("/api/v1", personRouter)
 
 
 app.get("/", (req, res, next) => {
   res.sendFile(path.join(`${__dirname}/frontend/index.html`));
 });
 
-app.get("/hmm", (req, res, next) => {
-  res.sendFile(path.join(`${__dirname}/frontend/hmm.html`));
-});
+// app.get("/edit", (req, res, next) => {
+//   res.sendFile(path.join(`${__dirname}/frontend/edit.html`));
+// });
 
-app.get("/something", (req, res, next) => {
-  res.sendFile(path.join(`${__dirname}/frontend/something.html`));
-});
+// app.get("/something", (req, res, next) => {
+//   res.sendFile(path.join(`${__dirname}/frontend/something.html`));
+// });
 
 app.use("/public", express.static(`${__dirname}/frontend/public`));
 
