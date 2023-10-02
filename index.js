@@ -5,6 +5,44 @@ const app = express();
 
 app.use(express.json());
 
+let URLS = {}
+
+setInterval(() => {
+    URLS = {}
+}, 
+10000)
+
+app.use("/", (req,res,next) => {
+    console.log(URLS);
+    if (!URLS[req.ip]) {
+        URLS[req.ip] = 10
+    }
+    else if (URLS[req.ip] > 0) {
+        URLS[req.ip] = URLS[req.ip] -1
+        next()
+    }
+    else {
+        res.send("BANNED FOR A MINUTE")
+    }
+})
+
+app.use("/", (req,res,next) => {
+    // console.log(`FROM: ${req.ip} --- METHOD: ${req.method} --- URL: ${req.url}`);
+
+    fs.readFile("./data/log.txt", "utf-8", (err,data) => {
+        data += `FROM:${req.ip}---METHOD:${req.method}---URL:${req.url} `
+
+        fs.writeFile("./data/log.txt", data, (err) => {
+            if (err) {
+                return res.json({message: "Internal server error"})
+            }
+            next()
+        })
+    })
+})
+
+
+
 
 app.get("/api/v1/getPeopleData", (req, res) => {
     fs.readFile('./data/people.json', 'utf-8', (err, data) => {
