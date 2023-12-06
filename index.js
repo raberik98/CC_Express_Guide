@@ -8,6 +8,15 @@ import { fileURLToPath } from "url";
 
 app.use(express.json());
 
+app.get("/", (req, res, next) => {
+    res.sendFile(path.join(`${__dirname}/frontend/landingPage.html`));
+});
+  
+app.use("/public", express.static(`${__dirname}/frontend/public`));
+
+
+
+
 app.get("/api/getData", (req, res) => {
   fs.readFile(`${__dirname}/data/animals.json`, (err, data) => {
     if (err) res.status(500).json({ message: "An error occured!" });
