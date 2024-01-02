@@ -1,7 +1,7 @@
 {
   "name": "cc_express_guide",
   "version": "1.0.0",
-  "description": "Express guide",
+  "description": "This is a backend project in Express.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
