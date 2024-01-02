@@ -1,6 +1,21 @@
 import express from "express"
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express()
+
+app.use("/", (req,res,next) => {
+    const ip = req.ip;
+    console.log(`Request came from: ${ip}`);
+    next()
+})
+
+app.get("/", (req, res, next) => {
+    res.sendFile(path.join(`${__dirname}/frontend/index.html`));
+});
+app.use("/public", express.static(`${__dirname}/frontend/`));
 
 const data = [
     "first string",
