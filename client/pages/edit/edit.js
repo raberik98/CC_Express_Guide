@@ -1,6 +1,17 @@
 let urlStringParts = document.location.href.split("/")
 let mode = urlStringParts[urlStringParts.length-1] == "register" ? "reg" : "edit"
 
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//PLEASE READ!!!
+//As we discussed it during the WS, it is possible to create a general fetchData function with the ability to handle multiple requests to our sever.
+//I created this alternative fetchData function in a separate js inside of the public folder.
+//Please note that while it is compleately viable to use a function like this, if you decide to use such a solution it is recommended to
+//design your backend logic to be a very consistent one
+
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+
 
 async function fetchData() {
     try {
