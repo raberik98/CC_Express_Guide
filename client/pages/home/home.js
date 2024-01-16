@@ -16,7 +16,12 @@ document.addEventListener("click", (e) => {
 
     let id = parseInt(e.target.id)
 
-    if (id !== NaN) {
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN
+
+    //Check this section: 
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN#testing_against_nan
+
+    if (!isNaN(id)) {
         document.location.href = `/edit/${id}`
     }
 })
